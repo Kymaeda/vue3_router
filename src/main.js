@@ -18,12 +18,12 @@ const routes = [
     name: 'about',
   },
   {
-    path: '/articles/:id',
+    path: '/articles/:id(\\d+)',
     component: ArticlePage,
     name: 'articles',
   },
   {
-    path: '/:url(.*)',
+    path: '/:url(.+)?',
     component: NotFoundPage,
     name: 'Not Found',
   },
