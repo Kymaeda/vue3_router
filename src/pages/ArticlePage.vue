@@ -11,26 +11,22 @@
 import { articles } from '../data';
 
 export default {
+  props: ['id'],
   data() {
     return {
       article: null,
     }
   },
-  watch: {
-    '$route.params': {
-      handler: function(newParams) {
-        if (newParams.id != undefined && articles[newParams.id] === undefined) {
-          return this.$router.push({
-            name: 'Not Found',
-            params: {
-              url: `${newParams.id}`
-            },
-          })
-        }
-        this.article = articles[newParams.id]
-      },
-      immediate: true,
-    },
+  created() {
+    if (articles[this.id] === undefined) {
+      return this.$router.push({
+        name: 'Not Found',
+        params: {
+          url: `${this.id}`
+        },
+      })
+    }
+    this.article = articles[this.id]
   },
 }
 </script>
