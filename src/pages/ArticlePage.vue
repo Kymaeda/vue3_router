@@ -8,11 +8,8 @@
 </template>
 
 <script>
-const articles = {
-  1: { title: 'title1' },
-  2: { title: 'title2' },
-  3: { title: 'title3' },
-}
+import { articles } from '../data';
+
 export default {
   data() {
     return {
@@ -22,6 +19,14 @@ export default {
   watch: {
     '$route.params': {
       handler: function(newParams) {
+        if (newParams.id != undefined && articles[newParams.id] === undefined) {
+          return this.$router.push({
+            name: 'Not Found',
+            params: {
+              url: `${newParams.id}`
+            },
+          })
+        }
         this.article = articles[newParams.id]
       },
       immediate: true,
