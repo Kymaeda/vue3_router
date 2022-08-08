@@ -5,6 +5,8 @@ import HomePage from './pages/HomePage.vue';
 import AboutPage from './pages/AboutPage.vue';
 import ArticlePage from './pages/ArticlePage.vue';
 import ArticlesByTagPage from './pages/ArticlesByTagPage.vue';
+import ArticleCommentList from './pages/ArticlePage/ArticleCommentList.vue';
+import ArticleAuthor from './pages/ArticlePage/ArticleAuthor.vue';
 import NotFoundPage from './pages/NotFoundPage.vue';
 
 const routes = [
@@ -24,6 +26,19 @@ const routes = [
     component: ArticlePage,
     name: 'articles',
     props: true,
+    children: [
+      {
+        path: '',
+        component: ArticleCommentList,
+        name: 'articles.comments',
+        props: true,
+      },
+      {
+        path: 'author',
+        component: ArticleAuthor,
+        name: 'articles.author',
+      },
+    ],
   },
   {
     path: '/tags/:tags+',

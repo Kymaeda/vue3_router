@@ -1,9 +1,11 @@
 <template>
-  <div>
-    Articles with id: {{ $route.params.id }}
-  </div>
   <div v-if="article">
-    {{ article.title }}
+    <h3>{{ article.title }}</h3>
+    <div>
+      <router-link :to="{name: 'articles.comments', params: { id: article.id }}">See Comments</router-link> |
+      <router-link :to="{name: 'articles.author'}">See Author</router-link>
+      <RouterView />
+    </div>
   </div>
 </template>
 
@@ -17,16 +19,26 @@ export default {
       article: null,
     }
   },
-  created() {
-    if (articles[this.id] === undefined) {
-      return this.$router.push({
-        name: 'Not Found',
-        params: {
-          url: `${this.id}`
-        },
-      })
+  watch: {
+    id() {
+      this.loadArticle()
     }
-    this.article = articles[this.id]
   },
+  created() {
+    this.loadArticle()
+  },
+  methods: {
+    loadArticle() {
+      if (articles[this.id] === undefined) {
+        return this.$router.push({
+          name: 'Not Found',
+          params: {
+            url: `${this.id}`
+          },
+        })
+      }
+      this.article = articles[this.id]
+    }
+  }
 }
 </script>

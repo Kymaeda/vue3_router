@@ -1,3 +1,3 @@
 <template>
-  <h3>About</h3>
+  Author
 </template>
