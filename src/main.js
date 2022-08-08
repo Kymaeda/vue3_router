@@ -7,6 +7,7 @@ import ArticlePage from './pages/ArticlePage.vue';
 import ArticlesByTagPage from './pages/ArticlesByTagPage.vue';
 import ArticleCommentList from './pages/ArticlePage/ArticleCommentList.vue';
 import ArticleAuthor from './pages/ArticlePage/ArticleAuthor.vue';
+import Logging from './pages/LoggingPage.vue'
 import NotFoundPage from './pages/NotFoundPage.vue';
 
 const routes = [
@@ -51,11 +52,28 @@ const routes = [
     component: NotFoundPage,
     name: 'Not Found',
   },
+  {
+    path: '/logging',
+    component: Logging,
+    name: 'logging',
+  }
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes
+})
+
+
+router.beforeEach((to, from) => {
+  console.log(`global beforeEach: from ${from.name} to ${to.name}`);
+  // avoid redirecting to the page if beforeEach method returns false
+  // return false;
+  // beforeEach method could return `true`, `undefined` or no return values , or alternative path( or router definition)
+  if (['logging', 'home', 'about'].includes(to.name)) {
+    return true
+  }
+  return { name: 'logging', query: { redirect: to.fullPath } }
 })
 
 const app = createApp(App)
