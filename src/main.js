@@ -12,6 +12,7 @@ const routes = [
     path: '/',
     component: HomePage,
     name: 'home',
+    alias: ['/home', '/top'],
   },
   {
     path: '/about',
